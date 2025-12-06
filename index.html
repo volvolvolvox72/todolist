@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>ToDoリスト Level3</title>
+    <script src="Sortable-master/Sortable.min.js"></script>
+    <script>
+        window.onload = function  (){
+            document.getElementById("button").onclick = addition;
+            document.getElementById("allDel").onclick = allDel;
+
+            const input = document.getElementById("taskname");
+            input.onkeydown = function  (e){
+                if(e.key === "Enter"){
+                    addition();
+                }
+            }
+
+            const elem = document.getElementById("list");
+            Sortable.create(elem,{
+                animation: 60
+            });
+
+
+            document.onkeydown = function  (e){
+                const tag = document.activeElement.tagName.toLowerCase();
+                if(tag === "input"){return};
+                if(e.key === "7"){
+                    document.body.classList.toggle("rainbow");
+                };
+            }
+        }
+
+        function addition(){
+            let taskname = document.getElementById("taskname").value;
+
+            if(taskname.trim() === ""){return}
+
+            let list = document.getElementById("list");
+
+            const li = document.createElement("li");
+
+            const div = document.createElement("div");
+
+            const task = document.createElement("p");
+            task.textContent = taskname.trim();
+
+            const button = document.createElement("button");
+            button.textContent = "削除";
+            button.onclick = function  (){li.remove();};
+
+            const checkbox = document.createElement("input");
+            checkbox.type = "checkbox";
+            checkbox.onchange = function  (){
+                task.classList.toggle("checked")
+            };
+
+            list.append(li);
+            li.append(div);
+            div.append(checkbox);
+            div.append(task);
+            li.append(button);
+
+            document.getElementById("taskname").value = "";
+        }
+
+        function allDel(){
+            if(confirm("本当に全て削除しますか？")){
+                const ul = document.getElementById("list");
+                ul.innerHTML = "";
+            }
+        }
+    </script>
+</head>
+<body>
+<!-- デベロッパーツールでこのToDoリスト見るなんて、暇かー？ ７キー押してみな -->
+    <h1>ToDoリスト Level3</h1>
+    <input id="taskname" type="text" placeholder="やることを入力">
+    <button id="button">追加</button>
+    <button id="allDel">全削除</button>
+    <ul id="list"></ul>
+</body>
+</html>
