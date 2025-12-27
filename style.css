@@ -10,6 +10,9 @@ button{
     user-select: none;
     transition: all 0.5s;
 }
+#allDel{
+    margin-left: 30px;
+}
 
 ul{
     list-style: none;
